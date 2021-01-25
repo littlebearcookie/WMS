@@ -27,9 +27,3 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
-$titleColor: #f00;
-.title {
-  color: $titleColor;
-}
-</style>

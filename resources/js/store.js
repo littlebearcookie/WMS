@@ -2,12 +2,9 @@ import Vue from 'vue';
 // Vuex
 import Vuex from 'vuex';
 Vue.use(Vuex);
-// axios (Vue Ajax)
-import vueaxios from 'vue-axios'
-import axios from 'axios'
-Vue.use(vueaxios, axios)
 // Vue router
 import router from './router'
+import { apiUserProfile, apiUserRefresh } from './api'
 
 const store = new Vuex.Store({
   state: {
@@ -17,14 +14,7 @@ const store = new Vuex.Store({
   },
   actions: {
     getUser({ commit, dispatch }) {
-      const option = {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("access_token"),
-        },
-        url: "http://172.16.101.119/demo/public/api/profile",
-      };
-      axios(option)
+      apiUserProfile()
         .then((res) => {
           commit("setUserName", res.data.name);
         })
@@ -37,14 +27,7 @@ const store = new Vuex.Store({
         });
     },
     refreshToken({ commit }) {
-      const option = {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("access_token"),
-        },
-        url: "http://172.16.101.119/demo/public/api/auth/refresh",
-      };
-      axios(option)
+      apiUserRefresh({})
         .then((res) => {
           localStorage.setItem("access_token", res.data.access_token);
         })
@@ -71,8 +54,8 @@ const store = new Vuex.Store({
     setUserName(state, payload) {
       state.userName = payload;
     },
-    loaded(state) {
-      state.isLoading = !state.isLoading;
+    loaded(state, payload) {
+      state.isLoading = payload;
     }
   }
 

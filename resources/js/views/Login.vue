@@ -10,62 +10,47 @@
       <div class="mb-3 row">
         <label for="password" class="col-4 col-form-label">Password</label>
         <div class="col-8">
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            v-model="password"
-          />
+          <input type="password" class="form-control" id="password" v-model="password" />
         </div>
       </div>
       <div
-        v-show="login_failed"
+        v-show="alert == 'failed'"
         class="alert alert-danger alert-dismissible"
         role="alert"
       >
         <strong>登入失敗</strong>
-        <button
-          type="button"
-          class="btn-close"
-          @click="login_failed = false"
-        ></button>
+        <button type="button" class="btn-close" @click="alert = ''"></button>
       </div>
-      <button type="button" class="btn btn-success col-12" @click="login()">
-        Login
-      </button>
+      <button type="button" class="btn btn-success col-12" @click="login()">Login</button>
     </div>
   </div>
 </template>
 
 <script>
+import { apiUserLogin } from "../api";
 export default {
   name: "Login",
   data() {
     return {
       email: "",
       password: "",
-      login_failed: false,
+      alert: "",
     };
   },
   methods: {
     login() {
-      const option = {
-        method: "POST",
-        url: "http://172.16.101.119/demo/public/api/auth/login",
-        data: {
-          email: this.email,
-          password: this.password,
-        },
+      const data = {
+        email: this.email,
+        password: this.password,
       };
-      this.axios(option)
+      apiUserLogin(data)
         .then((res) => {
           this.$store.commit("setLogin", res.data.access_token);
         })
         .catch((error) => {
-          this.login_failed = true;
+          this.alert = "failed";
         });
     },
   },
 };
 </script>
-<style scoped lang="scss"></style>

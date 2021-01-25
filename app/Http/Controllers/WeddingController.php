@@ -3,20 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Wedding;
+use App\Models\Wedding;
 
 class WeddingController extends Controller
 {
-  public function all(Request $request)
+  public function all()
   {
-    $weddings = Wedding::find(auth()->user()->id)->get();
-    return response(
-      [
-        "status" => "ok",
-        "data" => $weddings
-      ],
-      200
-    );
+    $weddings = Wedding::where('owner', auth()->user()->id)
+      ->orderBy("created_at", "DESC")
+      ->get();
+    return response()->json([
+      "status" => "ok",
+      "data" => $weddings
+    ]);
   }
   public function add(Request $request)
   {
@@ -25,15 +24,20 @@ class WeddingController extends Controller
       "bride" => "required|max:10",
       "bridegroom" => "required|max:10",
       "date" => "required|date_format:Y-m-d H:i:s",
+      "address" => "required|max:50",
     ]);
     $wedding = new Wedding;
     $wedding->name = $request->input("name");
     $wedding->bride = $request->input("bride");
     $wedding->bridegroom = $request->input("bridegroom");
     $wedding->date = $request->input("date");
+    $wedding->address = $request->input("address");
     $wedding->owner = auth()->user()->id;
+    $wedding->key = md5(time());
     $wedding->save();
-    return response(["status" => "ok",], 200);
+    return response()->json([
+      "status" => "ok"
+    ]);
   }
   public function edit(Request $request, $wedding_id)
   {
@@ -42,13 +46,25 @@ class WeddingController extends Controller
       "bride" => "required|max:10",
       "bridegroom" => "required|max:10",
       "date" => "required|date_format:Y-m-d H:i:s",
+      "address" => "required|max:50",
     ]);
     $wedding = Wedding::find($wedding_id);
     $wedding->name = $request->input("name");
     $wedding->bride = $request->input("bride");
     $wedding->bridegroom = $request->input("bridegroom");
     $wedding->date = $request->input("date");
+    $wedding->address = $request->input("address");
     $wedding->save();
-    return response(["status" => "ok",], 200);
+    return response()->json([
+      "status" => "ok"
+    ]);
+  }
+  public function delete($wedding_id)
+  {
+    $wedding = Wedding::find($wedding_id);
+    $wedding->delete();
+    return response()->json([
+      "status" => "ok"
+    ]);
   }
 }

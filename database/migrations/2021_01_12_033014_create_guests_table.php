@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWeddingsTable extends Migration
+class CreateGuestsTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,14 +13,10 @@ class CreateWeddingsTable extends Migration
    */
   public function up()
   {
-    Schema::create('weddings', function (Blueprint $table) {
+    Schema::create('guests', function (Blueprint $table) {
       $table->id();
+      $table->bigInteger("wedding_id");
       $table->string("name", 20);
-      $table->string("bridegroom", 20);
-      $table->string("bride", 20);
-      $table->dateTime("date");
-      $table->string("address", 50);
-      $table->bigInteger("owner");
       $table->string("key", 100);
       $table->timestamps();
     });
@@ -33,6 +29,6 @@ class CreateWeddingsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('weddings');
+    Schema::dropIfExists('guests');
   }
 }

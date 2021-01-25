@@ -2,61 +2,69 @@
   <div id="app">
     <div id="loading" v-show="isLoading"></div>
     <div style="height: 10vh">
-      <nav class="navbar navbar-expand-md navbar-light bg-light px-2">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'Wedding' }">
-                Wedding
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">WMS</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" :to="{ name: 'Wedding' }">
+                  Wedding
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" :to="{ name: 'Guest' }">
+                  Guest
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" :to="{ name: 'User' }">
+                  Profile
+                </router-link>
+              </li>
+            </ul>
+            <!-- User -->
+            <div class="d-flex" v-if="isLogin">
+              <strong class="userName">Hello, {{ userName }}</strong>
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger float-right"
+                @click="logout()"
+              >
+                Logout
+              </button>
+            </div>
+            <!-- Guest -->
+            <div class="d-flex" v-else>
+              <router-link
+                tag="button"
+                class="btn btn-sm btn-outline-success me-2"
+                :to="{ name: 'Login' }"
+              >
+                Login
               </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'User' }"> Profile </router-link>
-            </li>
-          </ul>
-          <!-- User -->
-          <div class="d-flex" v-if="isLogin">
-            <strong class="userName">Hello, {{ userName }}</strong>
-            <button
-              type="button"
-              class="btn btn-sm btn-outline-danger float-right"
-              @click="logout()"
-            >
-              Logout
-            </button>
-          </div>
-          <!-- Guest -->
-          <div class="d-flex" v-else>
-            <router-link
-              tag="button"
-              class="btn btn-sm btn-outline-success mr-2"
-              :to="{ name: 'Login' }"
-            >
-              Login
-            </router-link>
-            <router-link
-              tag="button"
-              class="btn btn-sm btn-outline-primary"
-              :to="{ name: 'Register' }"
-            >
-              Register
-            </router-link>
+              <router-link
+                tag="button"
+                class="btn btn-sm btn-outline-primary"
+                :to="{ name: 'Register' }"
+              >
+                Register
+              </router-link>
+            </div>
           </div>
         </div>
       </nav>
@@ -68,6 +76,7 @@
   </div>
 </template>
 <script>
+import { apiUserLogout } from "./api";
 export default {
   name: "App",
   data() {
@@ -82,31 +91,29 @@ export default {
     },
     userName() {
       return this.$store.state.userName;
-    },
+    }
   },
   mounted() {
     if (this.isLogin) this.$store.dispatch("getUser");
   },
   methods: {
     logout() {
-      const option = {
-        method: "POST",
-        url: "http://172.16.101.119/demo/public/api/auth/logout",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("access_token"),
-        },
-      };
-      this.axios(option)
-        .then((res) => {
+      apiUserLogout()
+        .then(res => {
           this.$store.commit("setLogout");
         })
-        .catch((error) => {});
-    },
-  },
+        .catch(error => {});
+    }
+  }
 };
 </script>
 
 <style lang="scss">
+button {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 #loading {
   width: 100vw;
   height: 100vh;

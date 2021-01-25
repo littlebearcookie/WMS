@@ -19,7 +19,6 @@
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -28,23 +27,23 @@
 // window.axios = require('axios');
 // window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-import Vue from 'vue'
+import Vue from "vue";
 // Bootstrap
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 // axios (Vue Ajax)
-import vueaxios from 'vue-axios'
-import axios from 'axios'
+import vueaxios from "vue-axios";
+import axios from "axios";
 // Vue router
-import router from './router'
+import router from "./router";
 // Vuex
-import store from './store'
+import store from "./store";
 // Index App Component
-import App from './App'
-Vue.use(vueaxios, axios)
+import App from "./App";
+Vue.use(vueaxios, axios);
 const app = new Vue({
-    el: '#app',
-    components: { App },
-    router,
-    store
+  el: "#app",
+  components: { App },
+  router,
+  store
 });
