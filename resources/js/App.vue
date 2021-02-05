@@ -32,6 +32,11 @@
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link class="nav-link" :to="{ name: 'Form' }">
+                  Form
+                </router-link>
+              </li>
+              <li class="nav-item">
                 <router-link class="nav-link" :to="{ name: 'User' }">
                   Profile
                 </router-link>

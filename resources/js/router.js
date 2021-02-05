@@ -7,9 +7,13 @@ import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import User from "./views/User.vue";
 import Wedding from "./views/Wedding.vue";
-import Guest from "./views/Guest.vue";
 import AddWedding from "./views/AddWedding.vue";
-import AddQuestion from "./views/AddQuestion.vue";
+import EditWedding from "./views/EditWedding.vue";
+import Guest from "./views/Guest.vue";
+import Form from "./views/Form.vue";
+import AddForm from "./views/AddForm.vue";
+import EditForm from "./views/EditForm.vue";
+import PreviewForm from "./views/PreviewForm.vue";
 
 // 使用 Vue Router
 Vue.use(Router);
@@ -56,11 +60,11 @@ var router = new Router({
       component: AddWedding,
       meta: { requireAuth: true }
     },
-    // Add question
+    // Edit wedding
     {
-      path: "/addQuestion",
-      name: "AddQuestion",
-      component: AddQuestion,
+      path: "/editWedding/:wedding_id",
+      name: "EditWedding",
+      component: EditWedding,
       meta: { requireAuth: true }
     },
     // Guest
@@ -68,6 +72,34 @@ var router = new Router({
       path: "/guest/:wedding_id?",
       name: "Guest",
       component: Guest,
+      meta: { requireAuth: true }
+    },
+    // Form
+    {
+      path: "/form",
+      name: "Form",
+      component: Form,
+      meta: { requireAuth: true }
+    },
+    // Add form
+    {
+      path: "/addForm",
+      name: "AddForm",
+      component: AddForm,
+      meta: { requireAuth: true }
+    },
+    // Edit form
+    {
+      path: "/editForm/:form_id",
+      name: "EditForm",
+      component: EditForm,
+      meta: { requireAuth: true }
+    },
+    // Preview form
+    {
+      path: "/form/preview/:form_id",
+      name: "PreviewForm",
+      component: PreviewForm,
       meta: { requireAuth: true }
     }
   ]

@@ -50,6 +50,7 @@ Route::group([
 ], function () {
   # Wedding 
   Route::get('/weddings', 'WeddingController@all');
+  Route::get('/weddings/{wedding_id}', 'WeddingController@one');
   Route::post('/weddings', 'WeddingController@add');
   Route::put('/weddings/{wedding_id}', 'WeddingController@edit');
   Route::delete('/weddings/{wedding_id}', 'WeddingController@delete');
@@ -59,4 +60,10 @@ Route::group([
   Route::post('/guests/{wedding_id}', 'GuestController@add');
   Route::put('/guests/{wedding_id}/{participant_id}', 'GuestController@edit');
   Route::delete('/guests/{wedding_id}/{participant_id}', 'GuestController@delete');
+  # Forms
+  Route::get('/forms', 'FormController@all');
+  Route::get('/forms/{form_id}', 'FormController@one');
+  Route::post('/forms', 'FormController@add');
+  Route::put('/forms/{form_id}', 'FormController@edit');
+  Route::delete('/forms/{form_id}', 'FormController@delete');
 });
