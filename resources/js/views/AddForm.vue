@@ -1,36 +1,50 @@
 <template>
   <div id="addForm" class="row">
     <div class="col-sm-10 col-md-8 m-auto">
+      <router-link
+        tag="button"
+        class="btn btn-outline-info mb-2"
+        :to="{ name: 'Form' }"
+        >Back</router-link
+      >
       <div>
-        <h2 style="display:inline">Form</h2>
-        <button
-          v-for="type in types"
-          :key="type.id"
-          class="btn btn-outline-primary me-1"
-          @click="addQuestion(type.id)"
-        >
-          {{ type.name }}
-        </button>
-        <button type="button" class="btn btn-success" @click="saveForm()">
-          Save
-        </button>
+        <h2 class="d-inline-block">Form</h2>
+        <div class="dropdown d-inline-block float-end">
+          <button
+            class="btn btn-outline-primary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+          >
+            新增問題
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li v-for="type in types" :key="type.id">
+              <button class="dropdown-item" @click="addQuestion(type.id)">
+                {{ type.name }}
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="mb-2">
-        <label class="form-label">Title</label>
-        <input
-          type="text"
-          placeholder="表單標題"
-          class="form-control"
-          v-model="title"
-        />
-      </div>
-      <div class="mb-2">
-        <label class="form-label">Content</label>
-        <textarea
-          placeholder="表單內容"
-          class="form-control"
-          v-model="content"
-        ></textarea>
+      <div class="titleBox my-2 p-3 border-secondary">
+        <div class="mb-2">
+          <label class="form-label">Title</label>
+          <input
+            type="text"
+            placeholder="表單標題"
+            class="form-control"
+            v-model="title"
+          />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Content</label>
+          <textarea
+            placeholder="表單內容"
+            class="form-control"
+            v-model="content"
+          ></textarea>
+        </div>
       </div>
       <div v-for="(question, index) in questions" class="my-2 p-3 questionBox">
         <label class="form-label">Question{{ index }}</label>
@@ -113,6 +127,11 @@
           </button>
         </div>
       </div>
+      <div class="mb-2 text-end">
+        <button type="button" class="btn btn-success" @click="saveForm()">
+          Save
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -167,6 +186,11 @@ export default {
 };
 </script>
 <style scope lang="scss">
+.titleBox {
+  border: 1px solid;
+  border-top: 10px solid;
+  border-radius: 8px;
+}
 .questionBox {
   border: 1px solid #aaa;
   border-radius: 8px;

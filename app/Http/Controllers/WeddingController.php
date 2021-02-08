@@ -17,6 +17,14 @@ class WeddingController extends Controller
       "data" => $weddings
     ]);
   }
+  public function one($wedding_id)
+  {
+    $wedding = Wedding::find($wedding_id);
+    return response()->json([
+      "status" => "ok",
+      "data" => $wedding
+    ]);
+  }
   public function add(Request $request)
   {
     $request->validate([
@@ -61,8 +69,7 @@ class WeddingController extends Controller
   }
   public function delete($wedding_id)
   {
-    $wedding = Wedding::find($wedding_id);
-    $wedding->delete();
+    Wedding::find($wedding_id)->delete();
     return response()->json([
       "status" => "ok"
     ]);

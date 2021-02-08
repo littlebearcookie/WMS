@@ -104,8 +104,7 @@ export const apiEditWedding = (id, data) =>
 export const apiDelWedding = id => manageRequest.delete("/weddings/" + id);
 
 // Guest 相關的 api
-// export const apiGuests = () => Request.get('');
-export const apiGetGuests = id => manageRequest.get("/guests/" + id);
+export const apiGetGuests = () => manageRequest.get("/guests");
 export const apiAddGuest = data => manageRequest.post("/guests", data);
 export const apiEditGuest = (id, data) =>
   manageRequest.put("/guests/" + id, data);

@@ -6,7 +6,6 @@
           <th class="text-end" colspan="5">
             <router-link
               tag="button"
-              type="button"
               class="btn btn-sm btn-outline-success"
               :to="{ name: 'AddForm' }"
             >

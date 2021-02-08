@@ -1,6 +1,12 @@
 <template>
   <div id="previewForm" class="row">
     <div class="col-sm-10 col-md-8 m-auto">
+      <router-link
+        tag="button"
+        class="btn btn-outline-info mb-2"
+        :to="{ name: 'Form' }"
+        >Back</router-link
+      >
       <h2 class="mb-3">{{ title }}</h2>
       <pre>{{ content }}</pre>
       <hr />

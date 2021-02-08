@@ -7,18 +7,18 @@
         :to="{ name: 'Wedding' }"
         >Back</router-link
       >
-      <h2>Add wedding</h2>
+      <h2>Edit wedding</h2>
       <div class="mb-3">
         <label class="form-label">Wedding name</label>
-        <input type="text" class="form-control" v-model="name" />
+        <input type="text" class="form-control" v-model="wedding.name" />
       </div>
       <div class="mb-3">
         <label class="form-label">Bride name</label>
-        <input type="text" class="form-control" v-model="bride" />
+        <input type="text" class="form-control" v-model="wedding.bride" />
       </div>
       <div class="mb-3">
         <label class="form-label">Bridegroom name</label>
-        <input type="text" class="form-control" v-model="bridegroom" />
+        <input type="text" class="form-control" v-model="wedding.bridegroom" />
       </div>
       <div class="mb-3">
         <label class="form-label">Wedding date</label>
@@ -26,12 +26,12 @@
           class="form-control"
           :pickTime="true"
           :format="'YYYY-MM-DD HH:mm:ss'"
-          v-model="date"
+          v-model="wedding.date"
         ></date-pick>
       </div>
       <div class="mb-3">
         <label class="form-label">Address</label>
-        <input type="text" class="form-control" v-model="address" />
+        <input type="text" class="form-control" v-model="wedding.address" />
       </div>
 
       <div
@@ -54,9 +54,9 @@
         <button
           type="button"
           class="btn btn-outline-success"
-          @click="addWedding()"
+          @click="Wedding()"
         >
-          Add
+          Save
         </button>
       </div>
     </div>
@@ -65,11 +65,12 @@
 <script>
 import DatePick from "vue-date-pick";
 import "vue-date-pick/dist/vueDatePick.css";
-import { apiAddWedding } from "../api";
+import { apiGetWedding, apiEditWedding } from "../api";
 export default {
-  name: "AddWedding",
+  name: "EditWedding",
   data() {
     return {
+      wedding: {},
       name: "",
       bride: "",
       bridegroom: "",
@@ -78,26 +79,25 @@ export default {
       alert: ""
     };
   },
-  computed: {},
+  computed: {
+    wedding_id() {
+      return this.$route.params.wedding_id;
+    }
+  },
   components: {
     DatePick
   },
-  mounted() {},
+  created() {
+    this.getWedding();
+  },
   methods: {
-    addWedding() {
-      const data = {
-        name: this.name,
-        bride: this.bride,
-        bridegroom: this.bridegroom,
-        address: this.address,
-        date: this.date
-      };
-      apiAddWedding(data)
+    getWedding() {
+      apiGetWedding(this.wedding_id)
         .then(res => {
-          this.$router.push({ name: "Wedding" });
+          this.wedding = res.data.data;
         })
         .catch(error => {
-          this.alert = "failed";
+          console.log(error);
         });
     }
   }

@@ -55,11 +55,11 @@ Route::group([
   Route::put('/weddings/{wedding_id}', 'WeddingController@edit');
   Route::delete('/weddings/{wedding_id}', 'WeddingController@delete');
   # Guests
-  Route::get('/guests/{wedding_id}', 'GuestController@all');
+  Route::get('/guests', 'GuestController@all');
   // Route::get('/guests/{participant_id}', 'GuestController@one');
-  Route::post('/guests/{wedding_id}', 'GuestController@add');
-  Route::put('/guests/{wedding_id}/{participant_id}', 'GuestController@edit');
-  Route::delete('/guests/{wedding_id}/{participant_id}', 'GuestController@delete');
+  Route::post('/guests', 'GuestController@add');
+  Route::put('/guests/{guest_id}', 'GuestController@edit');
+  Route::delete('/guests/{guest_id}', 'GuestController@delete');
   # Forms
   Route::get('/forms', 'FormController@all');
   Route::get('/forms/{form_id}', 'FormController@one');
